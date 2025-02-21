@@ -1,0 +1,6 @@
+1.) npm init
+2.) npm i express --save
+3.) Run the express server
+4.) Added .gitignore file
+5.) Added "start": "node --watch index.js" in package.json
+6.) added routes, controller and sequelizer
