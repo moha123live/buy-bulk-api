@@ -15,22 +15,22 @@ const createProduct = async (req, res) => {
         return successResponse(res, productData, "Product " + MESSAGES.CREATED, STATUS_CODES.CREATED);
     } catch (error) {
         if (transaction && !transaction.finished) await transaction.rollback();
-        return errorResponse(res, `Create product error ${error.message}`, STATUS_CODES.BAD_REQUEST);
+        return errorResponse(res, `Create product error : ${error.message}`, STATUS_CODES.BAD_REQUEST);
     }
 };
 
 const getAllProducts = async (req, res) => {
     const exclude = ["createdAt"];
     try {
-        const products = await productService.getAllProducts(exclude);
+        const { products, totalCount } = await productService.getAllProducts(exclude);
         const productsData = products.map(product => {
             const { ...productData } = product.toJSON();
             productData.updatedAt = indianDateAndTime(productData.updatedAt);
             return productData;
         });
-        return successResponse(res, productsData);
+        return successResponse(res, { products: productsData, totalCount });
     } catch (error) {
-        return errorResponse(res, `Get all products error ${error.message}`, STATUS_CODES.BAD_REQUEST);
+        return errorResponse(res, `Get all products error : ${error.message}`, STATUS_CODES.BAD_REQUEST);
     }
 };
 
@@ -43,7 +43,7 @@ const getProductById = async (req, res) => {
         const { ...productData } = product;
         return successResponse(res, productData);
     } catch (error) {
-        return errorResponse(res, `Get single product error ${error.message}`, STATUS_CODES.NOT_FOUND);
+        return errorResponse(res, `Get single product error : ${error.message}`, STATUS_CODES.NOT_FOUND);
     }
 };
 
@@ -59,7 +59,7 @@ const updateProduct = async (req, res) => {
         return successResponse(res, productData);
     } catch (error) {
         if (transaction && !transaction.finished) await transaction.rollback();
-        return errorResponse(res, `Update product error ${error.message}`, STATUS_CODES.BAD_REQUEST);
+        return errorResponse(res, `Update product error : ${error.message}`, STATUS_CODES.BAD_REQUEST);
     }
 };
 

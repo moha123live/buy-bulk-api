@@ -9,7 +9,7 @@ const successResponse = (res, data = null, message = MESSAGES.OK, status = STATU
         status,
         message,
         data,
-        dateTime : new Date().toLocaleString()
+        dateTime : indianDateAndTime(new Date().toLocaleString())
     });
 };
 
@@ -19,7 +19,7 @@ const errorResponse = (res, message = MESSAGES.INTERNAL_SERVER_ERROR, status = S
         status,
         message,
         data: null,
-        dateTime : new Date().toLocaleString()
+        dateTime : indianDateAndTime(new Date().toLocaleString())
     });
 };
 
