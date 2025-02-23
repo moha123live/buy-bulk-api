@@ -13,9 +13,9 @@ const createProduct = async (req, res) => {
         delete productData.createdAt; 
         await transaction.commit();
         return successResponse(res, productData, "Product " + MESSAGES.CREATED, STATUS_CODES.CREATED);
-    } catch (err) {
-        if (transaction) await transaction.rollback();
-        return errorResponse(res, err.message, STATUS_CODES.BAD_REQUEST);
+    } catch (error) {
+        if (transaction && !transaction.finished) await transaction.rollback();
+        return errorResponse(res, `Create product error ${error.message}`, STATUS_CODES.BAD_REQUEST);
     }
 };
 
@@ -29,8 +29,8 @@ const getAllProducts = async (req, res) => {
             return productData;
         });
         return successResponse(res, productsData);
-    } catch (err) {
-        return errorResponse(res, err.message, STATUS_CODES.BAD_REQUEST);
+    } catch (error) {
+        return errorResponse(res, `Get all products error ${error.message}`, STATUS_CODES.BAD_REQUEST);
     }
 };
 
@@ -42,8 +42,8 @@ const getProductById = async (req, res) => {
         if (!product) throw new Error("Product not found");
         const { ...productData } = product;
         return successResponse(res, productData);
-    } catch (err) {
-        return errorResponse(res, err.message, STATUS_CODES.NOT_FOUND);
+    } catch (error) {
+        return errorResponse(res, `Get single product error ${error.message}`, STATUS_CODES.NOT_FOUND);
     }
 };
 
@@ -57,9 +57,9 @@ const updateProduct = async (req, res) => {
         const { ...productData } = await productService.updateProduct(id, body, transaction, exclude);
         await transaction.commit();
         return successResponse(res, productData);
-    } catch (err) {
-        if (transaction) await transaction.rollback();
-        return errorResponse(res, err.message, STATUS_CODES.BAD_REQUEST);
+    } catch (error) {
+        if (transaction && !transaction.finished) await transaction.rollback();
+        return errorResponse(res, `Update product error ${error.message}`, STATUS_CODES.BAD_REQUEST);
     }
 };
 
@@ -71,9 +71,9 @@ const deleteProduct = async (req, res) => {
         await productService.deleteProduct(id, transaction);
         await transaction.commit();
         return successResponse(res, null, "Product deleted successfully");
-    } catch (err) {
-        if (transaction) await transaction.rollback();
-        return errorResponse(res, err.message, STATUS_CODES.BAD_REQUEST);
+    } catch (error) {
+        if (transaction && !transaction.finished) await transaction.rollback();
+        return errorResponse(res, error.message, STATUS_CODES.BAD_REQUEST);
     }
 };
 

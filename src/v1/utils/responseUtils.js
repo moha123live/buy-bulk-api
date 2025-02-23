@@ -1,7 +1,7 @@
 const { indianDateAndTime } = require("./commonUtils");
 
 const successResponse = (res, data = null, message = MESSAGES.OK, status = STATUS_CODES.OK) => {
-    if(data.updatedAt){
+    if(data?.updatedAt){
         data.updatedAt = indianDateAndTime(data.updatedAt);
     }
     return res.status(status).json({

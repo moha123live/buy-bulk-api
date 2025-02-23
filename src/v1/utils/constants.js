@@ -19,5 +19,6 @@ global.MESSAGES = {
     AUTHENTICATION_FAILED: "Authentication failed",
     USERNOTFOUND: "User not found",
     INVALIDUSER: "Invalid email or password",
-    USEREXISTS: "User already exists"
+    USEREXISTS: "User already exists",
+    REGISTER_FAILED:"Registration failed"
 };

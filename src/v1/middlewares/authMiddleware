@@ -1,0 +1,29 @@
+const jwt = require("jsonwebtoken");
+const { errorResponse } = require("../utils/responseUtils");
+const { getUserByWhere } = require("../services/userService");
+
+const authenticateToken = async (req, res, next) => {
+    const token = req.headers.authorization && req.headers.authorization.split(" ")[1];
+    if (!token) return errorResponse(res, MESSAGES.AUTHENTICATION_FAILED, STATUS_CODES.UNAUTHORIZED);
+    jwt.verify(token, process.env.SECRET_KEY, async (err, decoded) => {
+        if (err) return errorResponse(res, MESSAGES.AUTHENTICATION_FAILED, STATUS_CODES.UNAUTHORIZED);
+        if (!decoded.userId) return errorResponse(res, MESSAGES.AUTHENTICATION_FAILED, STATUS_CODES.UNAUTHORIZED);
+        try {
+            const whereCondition = { id: decoded.userId, isActive: true };
+            const exclude = ["password", "createdAt"];
+            const user = await getUserByWhere(whereCondition, exclude);
+            if (!user) {
+                return errorResponse(res, MESSAGES.AUTHENTICATION_FAILED, STATUS_CODES.UNAUTHORIZED);
+            }else {
+                req.user = decoded;
+                next();
+            }
+        } catch (error) {
+            console.error("Error verifying user:", error);
+            return errorResponse(res, MESSAGES.AUTHENTICATION_FAILED, STATUS_CODES.UNAUTHORIZED);
+        }
+
+    });
+};
+
+module.exports = { authenticateToken };
