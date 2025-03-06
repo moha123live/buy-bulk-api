@@ -12,11 +12,11 @@ const Product = sequelize.define("Product", {
         allowNull: false,
     },
     selling_price: {
-        type: DataTypes.FLOAT,
+        type: DataTypes.DECIMAL(10,2),
         allowNull: false,
     },
     market_price: {
-        type: DataTypes.FLOAT,
+        type: DataTypes.DECIMAL(10,2),
         allowNull: false,
     },
     stock: {

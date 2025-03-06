@@ -6,7 +6,7 @@ const { indianDateAndTime } = require("../utils/commonUtils");
 
 const createProduct = async (req, res) => {
     let transaction;
-    const { body: data } = req;
+    const data = { ...req.body, image: req.file?.buffer || null };
     try {
         transaction = await sequelize.transaction();
         const { ...productData }  = await productService.createProduct(data, transaction);
@@ -25,6 +25,9 @@ const getAllProducts = async (req, res) => {
         const { products, totalCount } = await productService.getAllProducts(exclude);
         const productsData = products.map(product => {
             const { ...productData } = product.toJSON();
+            if (productData.image) {
+                productData.image = `data:image/jpeg;base64,${productData.image.toString("base64")}`;
+            }
             productData.updatedAt = indianDateAndTime(productData.updatedAt);
             return productData;
         });
@@ -41,6 +44,9 @@ const getProductById = async (req, res) => {
         const product = await productService.getProductById(id, exclude);
         if (!product) throw new Error("Product not found");
         const { ...productData } = product;
+        if (productData.image) {
+            productData.image = `data:image/jpeg;base64,${productData.image.toString("base64")}`;
+        }
         return successResponse(res, productData);
     } catch (error) {
         return errorResponse(res, `Get single product error : ${error.message}`, STATUS_CODES.NOT_FOUND);

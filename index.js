@@ -10,7 +10,7 @@ const routes = require("./src/v1/routes");
 const app = express();
 app.use(cors());
 app.use(cors({
-    origin: "http://localhost:3000",
+    origin: "http://localhost:4200",
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true
