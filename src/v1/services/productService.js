@@ -56,22 +56,6 @@ const updateProduct = async (id, data, transaction, exclude = []) => {
     }
 };
 
-// const updateProduct = async (id, data, transaction, exclude = []) => {
-//     try {
-//         const updatedRows = await Product.update(data, {
-//             where: { id },
-//             transaction,
-//             attributes: { exclude }
-//         });
-
-//         if (updatedRows[0] === 0) throw new Error("Product not found or no changes made");
-
-//         return getProductById(id, exclude);
-//     } catch (error) {
-//         throw new Error(`Error updating the product - ${error}`);
-//     }
-// };
-
 const deleteProduct = async (id, transaction) => {
     try {
         const deletedProduct = await Product.destroy({
