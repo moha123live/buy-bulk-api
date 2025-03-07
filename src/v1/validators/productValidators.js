@@ -9,6 +9,17 @@ const validateProduct = [
     body("market_price").trim().notEmpty().withMessage("Market price is required"),
     body("market_price").isFloat({ min: 0 }).withMessage("Market price must be a positive number"),
     body("stock").trim().notEmpty().withMessage("Stock is required"),
+    (req, res, next) => {
+        if (req.file) {
+            if (!req.file.mimetype.startsWith("image/")) {
+                return errorResponse(res, "Only image files are allowed.", STATUS_CODES.BAD_REQUEST);
+            }
+            if (req.file.size > 5 * 1024 * 1024) {
+                return errorResponse(res, "File size should not exceed 5MB.", STATUS_CODES.BAD_REQUEST);
+            }
+        }
+        next();
+    },
     handleValidationResult
 ];
 
