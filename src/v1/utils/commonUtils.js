@@ -1,15 +1,14 @@
 const indianDateAndTime = (isoDateString) => {
     const date = new Date(isoDateString);
     const day = date.getDate();
-    const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     const month = monthNames[date.getMonth()];
-    const year = date.getFullYear();
+    const year = date.getFullYear().toString().slice(-2);
     const hours = date.getHours();
-    const minutes = ("0" + date.getMinutes()).slice(-2); // Ensure two-digit formatting for minutes
-    const seconds = ("0" + date.getSeconds()).slice(-2);
+    const minutes = ("0" + date.getMinutes()).slice(-2);
     const ampm = hours >= 12 ? "PM" : "AM";
-    const formattedHours = ("0" + hours % 12 || 12).slice(-2);;
-    const formattedDateTimeString = `${day}-${month}-${year}, ${formattedHours}:${minutes}:${seconds} ${ampm}`;
+    const formattedHours = ("0" + (hours % 12 || 12)).slice(-2);
+    const formattedDateTimeString = `${day}-${month}-${year}, ${formattedHours}:${minutes} ${ampm}`
     return formattedDateTimeString;
 };
 
