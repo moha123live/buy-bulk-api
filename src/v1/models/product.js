@@ -8,7 +8,7 @@ const Product = sequelize.define("Product", {
         defaultValue: DataTypes.UUIDV4
     },
     name: {
-        type: DataTypes.STRING(200),
+        type: DataTypes.STRING(100),
         allowNull: false,
     },
     selling_price: {

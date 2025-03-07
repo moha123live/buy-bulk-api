@@ -10,7 +10,7 @@ const { authenticateToken } = require("../middlewares/authMiddleware");
 router.post("/", authenticateToken, upload.single('image'), validateProduct, productController.createProduct);
 router.get("/", productController.getAllProducts);
 router.get("/:id", authenticateToken, validateProductId, productController.getProductById);
-router.put("/:id", authenticateToken, upload.single('image'), validateProductId, validateProduct, productController.updateProduct);
+router.patch("/:id", authenticateToken, upload.single('image'), validateProductId, validateProduct, productController.updateProduct);
 router.delete("/:id", authenticateToken, validateProductId, productController.deleteProduct);
 
 module.exports = router;

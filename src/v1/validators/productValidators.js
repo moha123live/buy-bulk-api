@@ -3,13 +3,12 @@ const { errorResponse } = require("../utils/responseUtils");
 
 const validateProduct = [
     body("name").trim().notEmpty().withMessage("Product name is required"),
-    body("name").trim().isLength({ min: 1, max: 250 }).withMessage("Product name must be maximum 250 characters only"),
+    body("name").trim().isLength({ min: 1, max: 100 }).withMessage("Product name must be maximum 100 characters only"),
     body("selling_price").trim().notEmpty().withMessage("Selling Price is required"),
     body("selling_price").isFloat({ min: 0 }).withMessage("Selling price must be a positive number"),
     body("market_price").trim().notEmpty().withMessage("Market price is required"),
     body("market_price").isFloat({ min: 0 }).withMessage("Market price must be a positive number"),
-    body("stock").trim().notEmpty().withMessage("Product name is required"),
-    // body("image").optional().isBase64().withMessage("Image must be a base64 encoded string"),
+    body("stock").trim().notEmpty().withMessage("Stock is required"),
     handleValidationResult
 ];
 
