@@ -3,7 +3,7 @@ const Product = require("../models/product");
 const getAllProducts = async (exclude = []) => {
     try {
         const [products, totalCount] = await Promise.all([
-            Product.findAll({ attributes: { exclude } }),
+            Product.findAll({ attributes: { exclude }, order: [['createdAt', 'ASC']] }),
             Product.count()
         ]);
 
@@ -45,6 +45,9 @@ const updateProduct = async (id, data, transaction, exclude = []) => {
             attributes: { exclude }
         });
         if (!product) throw new Error("Product not found");
+        if (data.image === undefined) {
+            delete data.image;
+        }
         await product.update(data, { transaction });
         return product.toJSON();
     }
@@ -52,6 +55,22 @@ const updateProduct = async (id, data, transaction, exclude = []) => {
         throw new Error(`Error to updating the product - ${error}`);
     }
 };
+
+// const updateProduct = async (id, data, transaction, exclude = []) => {
+//     try {
+//         const updatedRows = await Product.update(data, {
+//             where: { id },
+//             transaction,
+//             attributes: { exclude }
+//         });
+
+//         if (updatedRows[0] === 0) throw new Error("Product not found or no changes made");
+
+//         return getProductById(id, exclude);
+//     } catch (error) {
+//         throw new Error(`Error updating the product - ${error}`);
+//     }
+// };
 
 const deleteProduct = async (id, transaction) => {
     try {

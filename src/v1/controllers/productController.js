@@ -55,12 +55,18 @@ const getProductById = async (req, res) => {
 
 const updateProduct = async (req, res) => {
     let transaction;
-    const { body } = req;
     const id = req.params.id;
+    const body = { ...req.body};
+    if (req.file) {
+        body.image = req.file.buffer;
+    }
     const exclude = ["createdAt"];
     try {
         transaction = await sequelize.transaction();
         const { ...productData } = await productService.updateProduct(id, body, transaction, exclude);
+        if (productData.image) {
+            productData.image = `data:image/jpeg;base64,${productData.image.toString("base64")}`;
+        }
         await transaction.commit();
         return successResponse(res, productData);
     } catch (error) {
