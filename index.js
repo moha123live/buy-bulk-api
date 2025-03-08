@@ -9,8 +9,10 @@ const routes = require("./src/v1/routes");
 
 const app = express();
 app.use(cors());
+
+const FRONTEND_URL = process.env.FRONT_END;
 app.use(cors({
-    origin: "http://localhost:4200",
+    origin: FRONTEND_URL,
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true
@@ -18,6 +20,9 @@ app.use(cors({
 
 app.use(express.json());
 app.use("/api/v1", routes);
+app.get('/api/ping', (req, res) => {
+    res.status(200).json({ message: 'API is running smoothly!' });
+});
 app.use(errorHandler);
 
 const PORT = process.env.PORT || 3000;
