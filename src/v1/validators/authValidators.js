@@ -1,4 +1,4 @@
-const { body, param, validationResult } = require("express-validator");
+const { body, validationResult } = require("express-validator");
 const { errorResponse } = require("../utils/responseUtils");
 
 const validateLoginInput = [
@@ -15,15 +15,29 @@ const validateRegisterInput = [
     handleValidationResult
 ];
 
+const validateChangePassword = [
+    body("old_password").notEmpty().withMessage("Old password is required").isLength({ max: 16 }).withMessage("Old Password must be 16 characters or less"),
+    body("password").notEmpty().withMessage("New password is required").isLength({ max: 16 }).withMessage("New Password must be 16 characters or less"),
+    body("confirm_password").notEmpty().withMessage("Confirm password is required")
+        .custom((value, { req }) => {
+            if (value !== req.body.password) {
+                throw new Error("Passwords do not match");
+            }
+            return true;
+        }),
+    handleValidationResult
+];
+
 function handleValidationResult(req, res, next) {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return errorResponse(res, errors.array()[0].msg, STATUS_CODES.BAD_REQUEST);
     }
     next();
-};
+}
 
 module.exports = {
     validateLoginInput,
-    validateRegisterInput
+    validateRegisterInput,
+    validateChangePassword
 };

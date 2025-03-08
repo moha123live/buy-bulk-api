@@ -11,6 +11,7 @@ global.STATUS_CODES = {
 global.MESSAGES = {
     OK: "Success",
     CREATED: "Created successfully",
+    UPDATED: "Updated successfully",
     BAD_REQUEST: "Bad request",
     UNAUTHORIZED: "Unauthorized",
     FORBIDDEN: "Forbidden",

@@ -1,5 +1,17 @@
 const User = require("../models/user");
 
+const getUserById = async (userId, exclude = []) => {
+    try {
+        const user = await User.findByPk(userId, {
+            attributes: { exclude }
+        });
+        return user;
+    }
+    catch (error) {
+        throw new Error(`Error to fetch the user data by Id : ${error}`);
+    }
+};
+
 const getUserByWhere = async (whereCondition = {}, exclude = []) => {
     try {
         const user = await User.findOne({
@@ -22,4 +34,4 @@ const createUser = async (data, transaction) => {
     }
 };
 
-module.exports = { getUserByWhere, createUser};
+module.exports = { getUserById, getUserByWhere, createUser};

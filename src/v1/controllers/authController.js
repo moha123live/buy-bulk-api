@@ -4,6 +4,25 @@ const userService = require("../services/userService");
 const { indianDateAndTime } = require("../utils/commonUtils");
 const { sequelize } = require("../../../config/database");
 
+const changePassword = async (req,res) => {
+    let transaction;
+    const { old_password, password } = req.body;
+    const userId = req.user.userId;
+    const exclude = ["updatedAt","createdAt"];
+    try{
+        const user = await userService.getUserById(userId, exclude);
+        if (!user) return errorResponse(res, MESSAGES.USERNOTFOUND, STATUS_CODES.NOT_FOUND);
+        if (!await comparePassword(old_password, user.password)) return errorResponse(res, "Old password is invalid", STATUS_CODES.UNAUTHORIZED);
+        transaction = await sequelize.transaction();
+        user.password = await hashPassword(password);
+        await user.save({ transaction });
+        await transaction.commit();
+        return successResponse(res, null, `User ${MESSAGES.UPDATED}`, STATUS_CODES.OK);
+    } catch (error) {
+        if (transaction && !transaction.finished) await transaction.rollback();
+        return errorResponse(res, `Password change error - ${error}`);
+    }
+}
 
 const login = async (req, res) => {
     const { email, password: loginPassword } = req.body;
@@ -32,7 +51,7 @@ const register = async (req, res) => {
         if (existingUser) return errorResponse(res, MESSAGES.USEREXISTS, STATUS_CODES.BAD_REQUEST);
         transaction = await sequelize.transaction();
         const hashedPassword = await hashPassword(password);
-        const userData = await userService.createUser({ email, password: hashedPassword, name, phoneNumber, isActive }, transaction);
+        await userService.createUser({ email, password: hashedPassword, name, phoneNumber, isActive }, transaction);
         await transaction.commit();
         return successResponse(res, null, `User ${MESSAGES.CREATED}`, STATUS_CODES.CREATED);
     } catch (error) {
@@ -43,5 +62,6 @@ const register = async (req, res) => {
 
 module.exports = {
     login,
-    register
+    register,
+    changePassword
 };
