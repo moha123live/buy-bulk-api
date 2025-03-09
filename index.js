@@ -32,7 +32,7 @@ const startServer = async () => {
         await connectDB();
         await syncModels();
         app.listen(PORT, () => {
-            console.log(`🌍 Server is running on port http://localhost:${PORT}`);
+            console.log(`🌍 ${process.env.NODE_ENV} Server is running on port http://localhost:${PORT}`);
         });
     } catch (error) {
         console.error("❌ Server startup error:", error);

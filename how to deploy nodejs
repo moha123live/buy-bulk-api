@@ -1,0 +1,29 @@
+1.) open Window terminal
+2.) paste -> ssh -p 65002 u731226648@46.202.161.53
+3.) Enter the password
+Based on your project version need, install the version
+4.) First time - nvm install 22.14.0
+5.) First time - nvm use 22.14.0
+6.) First time - nvm alias default 22.14.0
+7.) cd domains/wedo-websites.com/public_html/testAPI/
+8.) npm install
+9.) create .htaccess file - touch ~domains/wedo-websites.com/public_html/testAPI/.htaccess
+10.) used to edit the file - nano ~domains/wedo-websites.com/public_html/testAPI/.htaccess
+11.) paste the below code
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ http://127.0.0.1:3000/$1 [P,L]
+12.) save the file. If failed open the folder in hostinger and paste the code.
+13.) service apache2 restart - If it is not working, follow the below steps or skip 14,15
+14.) restart the phpmyadmin -> advance - phpmyadmin - change the version & save. 
+15.) Revert back the version & save once again - it will restart the apache2
+16.) Install pm2 -> npm install -g pm2
+17.) pm2 start npm --name buy-bulk-api -- run prod      => This is for PROD
+18.) pm2 start npm --name buy-bulk-api -- run start     => This is for dev
+19.) pm2 save
+20.) command for pm2
+###Check logs: pm2 logs buy-bulk-api
+###Restart: pm2 restart buy-bulk-api
+###Stop: pm2 stop buy-bulk-api
+###Delete: pm2 delete buy-bulk-api
