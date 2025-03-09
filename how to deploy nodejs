@@ -16,7 +16,7 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)$ http://127.0.0.1:3000/$1 [P,L]
 12.) save the file. If failed open the folder in hostinger and paste the code.
 13.) service apache2 restart - If it is not working, follow the below steps or skip 14,15
-14.) restart the phpmyadmin -> advance - phpmyadmin - change the version & save. 
+14.) restart the phpmyadmin -> advance - phpconfiguration - change the version & save. 
 15.) Revert back the version & save once again - it will restart the apache2
 16.) Install pm2 -> npm install -g pm2
 17.) pm2 start npm --name buy-bulk-api -- run prod      => This is for PROD
