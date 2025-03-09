@@ -3,12 +3,14 @@ const { errorResponse } = require("../utils/responseUtils");
 
 const validateProduct = [
     body("name").trim().notEmpty().withMessage("Product name is required"),
-    body("name").trim().isLength({ min: 1, max: 100 }).withMessage("Product name must be maximum 100 characters only"),
+    body("name").trim().isLength({ max: 100 }).withMessage("Product name must be maximum 50 characters only"),
     body("selling_price").trim().notEmpty().withMessage("Selling Price is required"),
-    body("selling_price").trim().isLength({ min: 1, max: 20 }).withMessage("Selling price must be maximum 20 characters only"),
-    body("market_price").trim().notEmpty().withMessage("Market Price is required"),
-    body("market_price").trim().isLength({ min: 1, max: 20 }).withMessage("Market price must be maximum 20 characters only"),
-    body("stock").trim().notEmpty().withMessage("Stock is required"),
+    body("selling_price").isFloat({ min: 0, max: 999999.99 }).withMessage("Selling price must be a valid number"),
+    body("text").optional().isLength({ max: 20 }).withMessage("Text must be 100 characters only"),
+    body("market_price").trim().notEmpty().withMessage("Market price is required"),
+    body("market_price").isFloat({ min: 0, max: 999999.99 }).withMessage("Market price must be a valid number"),
+    body("stock").optional().isLength({ max: 10 }).withMessage("Stock must not exceed 10 characters"),
+    body("units").optional().isIn(["kg", "g", "l", "ml", "packs", "pcs", "units", "boxs", "bags"]).withMessage("Invalid unit type"),
     (req, res, next) => {
         if (req.file) {
             if (!req.file.mimetype.startsWith("image/")) {
