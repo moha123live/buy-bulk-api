@@ -1,5 +1,7 @@
 const indianDateAndTime = (isoDateString) => {
-    const date = new Date(isoDateString);
+    const utcDate = new Date(isoDateString);
+    const istOffset = 5.5 * 60 * 60 * 1000;
+    const date = new Date(utcDate.getTime() + istOffset);
     const day = date.getDate();
     const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     const month = monthNames[date.getMonth()];
