@@ -1,7 +1,7 @@
 const { DataTypes } = require("sequelize");
 const { sequelize } = require("../../../config/database");
 
-const Product = sequelize.define("Product", {
+const Product = sequelize.define("product", {
     id: {
         type: DataTypes.UUID,
         primaryKey: true,
@@ -12,11 +12,11 @@ const Product = sequelize.define("Product", {
         allowNull: false,
     },
     selling_price: {
-        type: DataTypes.DECIMAL(10,2),
+        type: DataTypes.STRING(20),
         allowNull: false,
     },
     market_price: {
-        type: DataTypes.DECIMAL(10,2),
+        type: DataTypes.STRING(20),
         allowNull: false,
     },
     stock: {

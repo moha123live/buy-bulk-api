@@ -10,7 +10,8 @@ const routes = require("./src/v1/routes");
 const app = express();
 app.use(cors());
 
-const FRONTEND_URL = process.env.FRONT_END;
+// const FRONTEND_URL = process.env.FRONT_END;
+const FRONTEND_URL = "http://localhost:4200";
 app.use(cors({
     origin: FRONTEND_URL,
     methods: ["GET", "POST", "PUT", "DELETE"],
