@@ -19,13 +19,14 @@ RewriteRule ^(.*)$ http://127.0.0.1:3000/$1 [P,L]
 14.) restart the phpmyadmin -> advance - phpconfiguration - change the version & save. 
 15.) Revert back the version & save once again - it will restart the apache2
 16.) Install pm2 -> npm install -g pm2
-17.) pm2 start npm --name buy-bulk-api -- run prod      => This is for PROD
-18.) pm2 start npm --name buy-bulk-api -- run start     => This is for dev
+17.) pm2 start npm --name buy-bulk-api -- run prod      => This is for PROD, u have to be inside the project directory
+18.) pm2 start npm --name buy-bulk-api -- run start     => This is for dev, u have to be inside the project directory
 19.) pm2 save
 20.) command for pm2
 ###Check logs: pm2 logs buy-bulk-api
-###Restart: pm2 restart buy-bulk-api
-###Stop: pm2 stop buy-bulk-api
-###Delete: pm2 delete buy-bulk-api
+###Restart: pm2 restart buy-bulk-api     => If any changes made, run this command one more time
+###Stop: pm2 stop buy-bulk-api , pm2 stop all
+###Delete: pm2 delete buy-bulk-api  , pm2 delete all
+
 
 https://testapi.wedo-websites.com/api/ping - too check the api is run or not
