@@ -27,6 +27,8 @@ RewriteRule ^(.*)$ http://127.0.0.1:3000/$1 [P,L]
 ###Restart: pm2 restart buy-bulk-api     => If any changes made, run this command one more time
 ###Stop: pm2 stop buy-bulk-api , pm2 stop all
 ###Delete: pm2 delete buy-bulk-api  , pm2 delete all
+pm2 flush
+pm2 restart all
 
 
 https://testapi.wedo-websites.com/api/ping - too check the api is run or not
