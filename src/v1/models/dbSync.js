@@ -6,13 +6,17 @@ const User = require('./user');
 
 const syncModels = async() => {
     try {
-        await Product.sync({ alter: true });
-        await Message.sync({ alter: true });
-        await Setting.sync({ alter: true });
-        await User.sync({ alter: true });
-        console.log("✅ All models synchronized with PostgreSQL");
+        // await Product.sync({ alter: true });
+        // await Message.sync({ alter: true });
+        // await Setting.sync({ alter: true });
+        // await User.sync({ alter: true });
+        await Product.sync();
+        await Message.sync();
+        await Setting.sync();
+        await User.sync();
+        console.log("All models synchronized with PostgreSQL");
     } catch (error) {
-        console.error("❌ Error synchronizing models:", error);
+        console.error("Error synchronizing models:", error);
         throw error;
     }
 };
