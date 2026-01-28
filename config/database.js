@@ -14,13 +14,14 @@ const sequelize = new Sequelize(process.env.DATABASE_URL, {
     min: 0,
     acquire: 30000,
     idle: 10000
-  }
+  },
+  define: { timestamps: true }
 });
 
 const connectDB = async () => {
   try {
     await sequelize.authenticate();
-    await sequelize.sync({ force: true });
+    // await sequelize.sync({ force: true });
     //  After first run, change to:
     // await sequelize.sync();
     console.log("PostgreSQL connection established successfully.");
