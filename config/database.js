@@ -7,8 +7,21 @@ const sequelize = new Sequelize(
   {
     host: process.env.DB_HOST,
     dialect: process.env.DB_DIALECT || "mysql",
+    dialect: 'mysql',
+    dialectOptions: {
+      ssl: {
+        require: true, // Important for Hostinger
+        rejectUnauthorized: false
+      }
+    },
     logging: false,
-    port: 3306
+    pool: {
+      max: 5,
+      min: 0,
+      acquire: 30000,
+      idle: 10000
+    },
+    timezone: '+00:00' 
   }
 );
 
