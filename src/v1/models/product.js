@@ -12,7 +12,7 @@ const Product = sequelize.define("product", {
         allowNull: false,
     },
     selling_price: {
-        type: DataTypes.FLOAT(10, 2),
+        type: DataTypes.DECIMAL(10, 2),
         allowNull: false,
         validate: {
             min: 0,
@@ -23,7 +23,7 @@ const Product = sequelize.define("product", {
         allowNull: true,
     },
     market_price: {
-        type: DataTypes.FLOAT(10, 2),
+        type: DataTypes.DECIMAL(10, 2),
         allowNull: false,
         validate: {
             min: 0,
@@ -34,11 +34,14 @@ const Product = sequelize.define("product", {
         allowNull: true,
     },
     units: {
-        type: DataTypes.ENUM("kg", "g", "l", "ml", "packs", "pcs", "units", "boxs", "bags"),
+        type: DataTypes.STRING(20),
         allowNull: true,
+        validate: {
+            isIn: [["kg", "g", "l", "ml", "packs", "pcs", "units", "boxs", "bags"]]
+        }
     },
     image: {
-        type: DataTypes.BLOB("long"),
+        type: DataTypes.BLOB,
         allowNull: true,
     }
 });
