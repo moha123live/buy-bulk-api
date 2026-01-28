@@ -64,3 +64,6 @@ functions/node_modules/
 .next/
 .nuxt/
 .svelte-kit/
+
+.env.prod
+.env
