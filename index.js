@@ -36,7 +36,6 @@ const startServer = async () => {
         });
     } catch (error) {
         console.error("❌ Server startup error:", error);
-        process.exit(1);
     }
 };
 
