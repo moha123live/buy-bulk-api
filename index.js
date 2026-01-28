@@ -8,8 +8,6 @@ const errorHandler = require("./src/v1/middlewares/errorHandler");
 const routes = require("./src/v1/routes");
 
 const app = express();
-app.use(cors());
-
 const FRONTEND_URL = process.env.FRONT_END;
 app.use(cors({
     origin: FRONTEND_URL,
@@ -32,10 +30,10 @@ const startServer = async () => {
         await connectDB();
         await syncModels();
         app.listen(PORT, () => {
-            console.log(`🌍 ${process.env.NODE_ENV} Server is running on port http://localhost:${PORT}`);
+            console.log(`Server running on port ${PORT}`);
         });
     } catch (error) {
-        console.error("❌ Server startup error:", error);
+        console.error("Server startup error:", error);
     }
 };
 
