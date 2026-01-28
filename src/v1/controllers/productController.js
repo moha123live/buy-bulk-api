@@ -9,8 +9,8 @@ const createProduct = async (req, res) => {
     const data = { ...req.body, image: req.file?.buffer || null };
     try {
         transaction = await sequelize.transaction();
-        const { ...productData }  = await productService.createProduct(data, transaction);
-        delete productData.createdAt; 
+        const { ...productData } = await productService.createProduct(data, transaction);
+        delete productData.createdAt;
         await transaction.commit();
         return successResponse(res, productData, "Product " + MESSAGES.CREATED, STATUS_CODES.CREATED);
     } catch (error) {
@@ -56,7 +56,7 @@ const getProductById = async (req, res) => {
 const updateProduct = async (req, res) => {
     let transaction;
     const id = req.params.id;
-    const body = { ...req.body};
+    const body = { ...req.body };
     if (req.file) {
         body.image = req.file.buffer;
     }

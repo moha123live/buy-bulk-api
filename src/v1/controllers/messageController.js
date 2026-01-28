@@ -9,9 +9,9 @@ const createMessage = async (req, res) => {
     const data = { ...req.body };
     try {
         transaction = await sequelize.transaction();
-        const { ...messageData }  = await messageService.createMessage(data, transaction);
-        delete messageData.createdAt; 
-        delete messageData.updatedAt; 
+        const { ...messageData } = await messageService.createMessage(data, transaction);
+        delete messageData.createdAt;
+        delete messageData.updatedAt;
         await transaction.commit();
         return successResponse(res, messageData, "Message " + MESSAGES.CREATED, STATUS_CODES.CREATED);
     } catch (error) {

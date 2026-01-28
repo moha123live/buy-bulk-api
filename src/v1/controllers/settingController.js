@@ -17,7 +17,7 @@ const getSettings = async (req, res) => {
 const updateSetting = async (req, res) => {
     let transaction;
     const id = req.params.id;
-    const body = { ...req.body};
+    const body = { ...req.body };
     const exclude = ["createdAt"];
     try {
         transaction = await sequelize.transaction();

@@ -4,12 +4,12 @@ const userService = require("../services/userService");
 const { indianDateAndTime } = require("../utils/commonUtils");
 const { sequelize } = require("../../../config/database");
 
-const changePassword = async (req,res) => {
+const changePassword = async (req, res) => {
     let transaction;
     const { old_password, password } = req.body;
     const userId = req.user.userId;
-    const exclude = ["updatedAt","createdAt"];
-    try{
+    const exclude = ["updatedAt", "createdAt"];
+    try {
         const user = await userService.getUserById(userId, exclude);
         if (!user) return errorResponse(res, MESSAGES.USERNOTFOUND, STATUS_CODES.NOT_FOUND);
         if (!await comparePassword(old_password, user.password)) return errorResponse(res, "Old password is invalid", STATUS_CODES.UNAUTHORIZED);
@@ -41,7 +41,7 @@ const login = async (req, res) => {
 }
 
 const register = async (req, res) => {
-    
+
     let transaction;
     const { email, password, name, phoneNumber, isActive } = req.body;
     const whereCondition = { email };
