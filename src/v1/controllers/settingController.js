@@ -6,9 +6,11 @@ const { indianDateAndTime } = require("../utils/commonUtils");
 const getSettings = async (req, res) => {
     const exclude = ["createdAt"];
     try {
-        const { ...settings } = await settingService.getSetting(exclude);
-        settings.updatedAt = indianDateAndTime(settings.updatedAt);
-        return successResponse(res, settings);
+        const settings = await settingService.getSetting(exclude);
+        if(!settings) return successResponse(res, settings);
+        const data = settings.toJSON();
+        data.updatedAt = indianDateAndTime(data.updatedAt);
+        return successResponse(res, data);
     } catch (error) {
         return errorResponse(res, `Get settings error : ${error.message}`, STATUS_CODES.BAD_REQUEST);
     }

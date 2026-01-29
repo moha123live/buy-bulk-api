@@ -1,13 +1,16 @@
 const { Sequelize } = require('sequelize');
+const isProd = process.env.NODE_ENV === 'prod';
 
 const sequelize = new Sequelize(process.env.DATABASE_URL, {
   dialect: 'postgres',
-  dialectOptions: {
-    ssl: {
-      require: true,
-      rejectUnauthorized: false
-    }
-  },
+  dialectOptions: isProd
+    ? {
+        ssl: {
+          require: true,
+          rejectUnauthorized: false
+        }
+      }
+    : {},
   logging: false,
   pool: {
     max: 5,
@@ -22,11 +25,11 @@ const connectDB = async () => {
   try {
     await sequelize.authenticate();
     // await sequelize.sync({ force: true });
-    //  After first run, change to:
-    // await sequelize.sync();
-    console.log("PostgreSQL connection established successfully.");
+    console.log(
+      `PostgreSQL connected (${isProd ? 'PROD' : 'LOCAL'})`
+    );
   } catch (error) {
-    console.error("Unable to connect to PostgreSQL:", error.message);
+    console.error('Unable to connect to PostgreSQL:', error.message);
     process.exit(1);
   }
 };

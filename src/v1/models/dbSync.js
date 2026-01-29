@@ -3,6 +3,7 @@ const Product = require("./product");
 const Message = require("./message");
 const Setting = require("./setting");
 const User = require('./user');
+const runInitialSeed = require("../seeders/initSeeder");
 
 const syncModels = async() => {
     try {
@@ -14,6 +15,7 @@ const syncModels = async() => {
         await Message.sync();
         await Setting.sync();
         await User.sync();
+        await runInitialSeed();
         console.log("All models synchronized with PostgreSQL");
     } catch (error) {
         console.error("Error synchronizing models:", error);

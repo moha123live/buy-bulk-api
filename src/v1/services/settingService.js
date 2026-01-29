@@ -3,7 +3,7 @@ const Setting = require("../models/setting");
 const getSetting = async (exclude = []) => {
     try {
         const settings =  await Setting.findOne({ attributes: { exclude } });
-        return settings.toJSON();
+        return settings ? settings : null;
     }
     catch (error) {
         throw new Error(`Error to fetch the settings - ${error}`);
