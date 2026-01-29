@@ -6,7 +6,7 @@ const validateProduct = [
     body("name").trim().isLength({ max: 100 }).withMessage("Product name must be maximum 50 characters only"),
     body("selling_price").trim().notEmpty().withMessage("Selling Price is required"),
     body("selling_price").isFloat({ min: 0, max: 999999.99 }).withMessage("Selling price must be a valid number"),
-    body("text").optional().isLength({ max: 20 }).withMessage("Text must be 100 characters only"),
+    body("text").optional().isLength({ max: 100 }).withMessage("Text must be 100 characters only"),
     body("market_price").trim().notEmpty().withMessage("Market price is required"),
     body("market_price").isFloat({ min: 0, max: 999999.99 }).withMessage("Market price must be a valid number"),
     body("stock").optional().isLength({ max: 10 }).withMessage("Stock must not exceed 10 characters"),
