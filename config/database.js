@@ -24,7 +24,7 @@ const sequelize = new Sequelize(process.env.DATABASE_URL, {
 const connectDB = async () => {
   try {
     await sequelize.authenticate();
-    await sequelize.sync({ force: true });
+    // await sequelize.sync({ force: true });
     console.log(
       `PostgreSQL connected (${isProd ? 'PROD' : 'LOCAL'})`
     );
