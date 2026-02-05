@@ -18,7 +18,7 @@ const syncModels = async() => {
         await runInitialSeed();
         console.log("All models synchronized with PostgreSQL");
     } catch (error) {
-        console.error("Error synchronizing models:", error);
+        console.log("Error synchronizing models:", error);
         throw error;
     }
 };
