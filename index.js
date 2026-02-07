@@ -39,14 +39,11 @@ const PORT = process.env.PORT || 3000;
 
 const startServer = async () => {
     try {
-        console.log('Starting server...');
         await connectDB();
         console.log('Database connected');
         await syncModels();
-        console.log('Models synchronized');
         app.listen(PORT, '0.0.0.0', () => {
-            console.log(`Server running on port ${PORT}`);
-            console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
+            console.log(`Environment: ${process.env.NODE_ENV || 'development'} - Server running on port ${PORT}`);
         });
     } catch (error) {
         console.error("Server startup error:", error.message);
