@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "node cluster.js",
+    "start": "cross-env NODE_ENV=prod node cluster.js",
     "dev": "node --watch index.js",
     "dev-cluster": "nodemon cluster.js",
     "prod": "cross-env NODE_ENV=prod node index.js",

@@ -55,17 +55,18 @@ const PORT = process.env.PORT || 3000;
 let server;
 
 const startServer = async () => {
-    try {
-        await connectDB();
-        // console.log(`Worker ${process.pid} - Database connected`);
-        server = app.listen(PORT, "0.0.0.0", () => {
-            console.log(`Worker ${process.pid} - Environment: ${process.env.NODE_ENV || "development"
-                } - Server running on port ${PORT}`);
-        });
-    } catch (error) {
-        console.error("Server error:", error);
-        process.exit(1);
-    }
+  try {
+    await connectDB();
+    console.log(`Worker ${process.pid} - Database connected`);
+  } catch (error) {
+    console.error("DB connection failed, continuing without DB");
+  }
+
+  app.listen(PORT, "0.0.0.0", () => {
+    console.log(
+      `Worker ${process.pid} - Server running on port ${PORT}`
+    );
+  });
 };
 
 startServer(); 
