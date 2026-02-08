@@ -20,11 +20,20 @@ jobs:
           username: ec2-user
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
+            set -e
             cd /home/ec2-user/buy-bulk-api
+
+            echo "Pulling latest code..."
             git pull origin master
+
+            echo "Building docker image..."
             docker build -t buy-bulk-api .
+
+            echo "Stopping old container..."
             docker stop buy-bulk-api-container || true
             docker rm buy-bulk-api-container || true
+
+            echo "Starting new container..."
             docker run -d \
               --name buy-bulk-api-container \
               --env-file .env \
