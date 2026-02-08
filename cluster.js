@@ -1,7 +1,7 @@
 const cluster = require("cluster");
 const os = require("os");
 
-const numCPUs = os.cpus().length;
+const numCPUs = process.env.NODE_ENV === 'prod' ? 1 : os.cpus().length;
 
 if (cluster.isPrimary) {
     console.log(`Master ${process.pid} is running with Forking ${numCPUs} workers`);
